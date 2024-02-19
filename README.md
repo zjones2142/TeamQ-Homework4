@@ -3,7 +3,7 @@ Name | GitID
 
 Zach Jones | zjones2142
 
-Rafa Bratfich de Oliveira | nbrxtz
+Rafa Bratfich de Oliveira | brxtz
 
 Joseph Mun | JosephMMun
 
