@@ -27,6 +27,18 @@ public class VehicleManager {
 		 * vehicleList. o If the vehicle is not found, then print an appropriate error
 		 * message.
 		 */
+		int numNOTCar = 0;
+		for(int i=0;i<vehicleList.size();i++) {
+			if(isVehicleType(vehicleList.get(i), Car.class)) {
+				System.out.println("Car "+i+":\n"+vehicleList.get(i).toString());
+			}
+			else {
+				numNOTCar++;
+			}
+		}
+		if(numNOTCar == vehicleList.size()) {
+			System.out.println("No Cars Found\n");
+		}
 	}
 	
 	public void displayAllTruckInformation() {
@@ -36,6 +48,18 @@ public class VehicleManager {
 		 * vehicleList. o If the vehicle is not found, then print an appropriate error
 		 * message.
 		 */
+		int numNOTTruck = 0;
+		for(int i=0;i<vehicleList.size();i++) {
+			if(isVehicleType(vehicleList.get(i), Truck.class)) {
+				System.out.println("Truck "+i+":\n"+vehicleList.get(i).toString());
+			}
+			else {
+				numNOTTruck++;
+			}
+		}
+		if(numNOTTruck == vehicleList.size()) {
+			System.out.println("No Trucks Found\n");
+		}
 	}
 	
 	public void displayAllSUVInformation() {
@@ -45,6 +69,18 @@ public class VehicleManager {
 		 * vehicleList. o If the vehicle is not found, then print an appropriate error
 		 * message.
 		 */
+		int numNOTSUV = 0;
+		for(int i=0;i<vehicleList.size();i++) {
+			if(isVehicleType(vehicleList.get(i), SUV.class)) {
+				System.out.println("SUV "+i+":\n"+vehicleList.get(i).toString());
+			}
+			else {
+				numNOTSUV++;
+			}
+		}
+		if(numNOTSUV == vehicleList.size()) {
+			System.out.println("No SUVs Found\n");
+		}
 	}
 	
 	public void displayAllMotorBikeInformation() {
@@ -54,6 +90,18 @@ public class VehicleManager {
 		 * vehicleList. o If the vehicle is not found, then print an appropriate error
 		 * message.
 		 */
+		int numNOTBike = 0;
+		for(int i=0;i<vehicleList.size();i++) {
+			if(isVehicleType(vehicleList.get(i), MotorBike.class)) {
+				System.out.println("MotorBike "+i+":\n"+vehicleList.get(i).toString());
+			}
+			else {
+				numNOTBike++;
+			}
+		}
+		if(numNOTBike == vehicleList.size()) {
+			System.out.println("No MotorBikes Found\n");
+		}
 	}
 	
 	public void displayVehicleInformation(Vehicle v) {
@@ -63,14 +111,22 @@ public class VehicleManager {
 		 * the vehicleList. o If the vehicle is not found, then print an appropriate
 		 * error message.
 		 */
+		if (vehicleList.contains(v)) {
+			System.out.println(v.toString());//vehicle class default vars
+			System.out.println(" Maintenance Cost: $"+v.calculateMaintenaceCost(distance)+"\n"+
+								" Fuel Efficiency: "+v.calculateFuelEfficiency(distance, fuelPrice)+"\n");
+		}
+		else {
+			System.out.println("Vehicle not found\n");
+		}
 	}
 	
 	public void displayAllVehicleInformation() {
-		/*
-		 * o This will print the information, including maintenance cost, fuel
-		 * efficiency, and how the vehicle starts, of all the vehicles in the
-		 * vehicleList. o Print an appropriate message if the list is empty.
-		 */
+		for(int i=0;i<vehicleList.size();i++) {
+			System.out.println("Vehicle "+i+":\n"+vehicleList.get(i).toString());
+			System.out.println(" Maintenance Cost: $"+vehicleList.get(i).calculateMaintenaceCost(distance)+"\n"+
+					" Fuel Efficiency: "+vehicleList.get(i).calculateFuelEfficiency(distance, fuelPrice)+"\n");
+		}
 	}
 	
 	//Todo: jm vvvvvvvvvvvvvv
@@ -112,7 +168,7 @@ public class VehicleManager {
 	}
 	
 	//Todo: mj (all "get___" methods {should be pretty similar}) vvvvvvvvvvvvvv
-	public int getNumberOfVehichlesByType(Class clazz) {
+	public int getNumberOfVehiclesByType(Class clazz) {
 		return 0;
 		/*
 		 * o Returns the number of objects in the vehicle list based on the object
