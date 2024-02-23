@@ -11,12 +11,13 @@ public abstract class Vehicle {
 	protected VehicleColor color;
 	protected FuelType fuelType;
 	protected double mileage;
+	protected double mass;
 	protected int cylinders;
 	protected double gasTankCapacity;
 	protected StartMechanism startType;
 	
 	protected Vehicle(String model, String make, long modelYear, double price, VehicleColor color, FuelType fuelType,
-			double mileage, int cylinders, double gasTankCapacity, StartMechanism startType) {
+			double mileage, double mass, int cylinders, double gasTankCapacity, StartMechanism startType) {
 		super();
 		this.model = model;
 		this.make = make;
@@ -25,11 +26,18 @@ public abstract class Vehicle {
 		this.color = color;
 		this.fuelType = fuelType;
 		this.mileage = mileage;
+		this.mass = mass;
 		this.cylinders = cylinders;
 		this.gasTankCapacity = gasTankCapacity;
 		this.startType = startType;
 	}
 	
+	public double getMass() {
+		return mass;
+	}
+	public void setMass(double mass) {
+		this.mass = mass;
+	}
 	public String getModel() {
 		return model;
 	}
