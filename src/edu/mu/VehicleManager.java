@@ -5,6 +5,7 @@ import java.util.*;
 public class VehicleManager {
 	private final static double distance = 300;
 	private final static double fuelPrice = 3.25;
+	public final static String vehicleListFile = "vehicleList.csv";
 	public ArrayList <Vehicle> vehicleList;
 	
 	//Todo: rb vvvvvvvvvvvvvv
