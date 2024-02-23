@@ -15,6 +15,21 @@ public abstract class Vehicle {
 	protected double gasTankCapacity;
 	protected StartMechanism startType;
 	
+	protected Vehicle(String model, String make, long modelYear, double price, VehicleColor color, FuelType fuelType,
+			double mileage, int cylinders, double gasTankCapacity, StartMechanism startType) {
+		super();
+		this.model = model;
+		this.make = make;
+		this.modelYear = modelYear;
+		this.price = price;
+		this.color = color;
+		this.fuelType = fuelType;
+		this.mileage = mileage;
+		this.cylinders = cylinders;
+		this.gasTankCapacity = gasTankCapacity;
+		this.startType = startType;
+	}
+	
 	public String getModel() {
 		return model;
 	}
