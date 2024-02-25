@@ -130,22 +130,25 @@ public class VehicleManager {
 		}
 	}
 	
-	//Todo: jm vvvvvvvvvvvvvv
+
 	public boolean removeVehicle(Vehicle vehicle) {
-		return false;
-		/*
-		 * o Removes the given vehicle from the vehicleList. o Returns true if the
-		 * removal is successful, false otherwise.
-		 */
+		/*Removes the given vehicle from the vehicleList.
+		o Returns true if the removal is successful, false otherwise.*/
+	    if (vehicle != null && vehicleList.contains(vehicle)) {
+	        vehicleList.remove(vehicle);
+	        return true; // Vehicle successfully removed
+	    }
+	    return false; // Vehicle not removed, possibly not found or null
 	}
 	
-	//Todo: jm vvvvvvvvvvvvvv
 	public boolean addVehicle(Vehicle vehicle) {
-		return false;
-		/*
-		 * o Adds the given vehicle into the vehicleList. o Returns true if the addition
-		 * is successful, false otherwise.
-		 */
+		/*o Adds the given vehicle into the vehicleList.
+		o Returns true if the addition is successful, false otherwise.*/
+	    if (vehicle != null) {
+	        vehicleList.add(vehicle);
+	        return true; // Vehicle successfully added
+	    }
+	    return false; // Vehicle not added, possibly null
 	}
 	
 	//Todo: rb vvvvvvvvvvvvvv
@@ -161,12 +164,14 @@ public class VehicleManager {
 	
 	//Todo: jm vvvvvvvvvvvvvv
 	private boolean isVehicleType(Vehicle v, Class clazz) {
-		return false;
 		/*o Checks if the given vehicle is a specific type of Vehicle subclass.
 		o If the given vehicle object is the object type, then return true, otherwise return false.
 		o Use instanceof or getClass() to count the number.
 		o Call example: isVehicleType(vehicleObj, Truck.class);*/
+	    if (v == null) return false; // Check if the vehicle is null to avoid NullPointerException.
+	    return v.getClass().equals(clazz); // Check if v's class matches the specified class exactly.
 	}
+
 	
 	//Todo: mj (all "get___" methods {should be pretty similar}) vvvvvvvvvvvvvv
 	public int getNumberOfVehiclesByType(Class clazz) {
