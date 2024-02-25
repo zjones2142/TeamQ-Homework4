@@ -99,16 +99,17 @@ public abstract class Vehicle {
 		this.startType = startType;
 	}
 	public String toString() {
-		return " Make: "+this.getMake()+"\n"+
-				" Model: "+this.getModel()+"\n"+
-				" Year: "+Long.toString(this.getModelYear())+"\n"+
-				" Price: $"+Double.toString(this.getPrice())+"\n"+
-				" Color: "+VehicleColor.toString(this.getColor())+"\n"+
-				" Fuel: "+FuelType.toString(this.getFuelType())+"\n"+
-				" Mileage: "+Double.toString(this.getMileage())+"\n"+
-				" Num Cylinders: "+Integer.toString(this.getCylinders())+"\n"+
-				" Gas Capacity: "+Double.toString(this.getGasTankCapacity())+" gal\n";
+	    return " Make: " + this.getMake() + "\n" +
+	           " Model: " + this.getModel() + "\n" +
+	           " Year: " + this.getModelYear() + "\n" +
+	           " Price: $" + this.getPrice() + "\n" +
+	           " Color: " + this.getColor().name() + "\n" +
+	           " Fuel: " + this.getFuelType().name() + "\n" +
+	           " Mileage: " + this.getMileage() + "\n" +
+	           " Num Cylinders: " + this.getCylinders() + "\n" +
+	           " Gas Capacity: " + this.getGasTankCapacity() + " gal\n";
 	}
+
 	
 	//abstract methods to be overridden by subclasses
 	public abstract double calculateMaintenaceCost(double distance);
