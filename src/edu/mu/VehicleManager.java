@@ -228,7 +228,7 @@ public class VehicleManager {
 		 */
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(vehicleListFile))) {
     		//string constructor
-			String[] str = new String[vehicleList.size()/2];
+			String[] str = new String[vehicleList.size()];
 			
     		for(int i=0;i<vehicleList.size();i++) {
     			str[i] = vehicleList.get(i).getModel()+","
