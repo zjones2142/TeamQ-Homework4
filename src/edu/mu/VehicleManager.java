@@ -175,60 +175,206 @@ public class VehicleManager {
 	
 	//Todo: mj (all "get___" methods {should be pretty similar}) vvvvvvvvvvvvvv
 	public int getNumberOfVehiclesByType(Class clazz) {
-		return 0;
+		
 		/*
 		 * o Returns the number of objects in the vehicle list based on the object
 		 * vehicle type o Use the isVehicleType(Vehicle v, Class clazz) method. o Call
 		 * example: getNumberOfVehichlesByType(SUV.class);
 		 */
+		
+		// set our counter equal to 0
+		int counter = 0;
+		//for every vehicle in vehicleList
+		for(Vehicle vehicle : vehicleList) {
+			//if the vehicle is of one of types base on parameters vehicle and class
+			if(isVehicleType(vehicle, clazz)) {
+				//iterate up on counter
+				counter++;
+			}
+		}
+		//return counter
+		return counter;
 	}
 	public Vehicle getVehicleWithHighestMaintenanceCost(double distance) {
-		return null;
+	
 			/*
 			 * o Calculate the maintenance cost for each vehicle in the vehicle list and
 			 * return the vehicle with the highest maintenance cost. o If multiple vehicles
 			 * have the same maintenance cost, randomly return one of the vehicles (Use the
 			 * Random class for random selection).
 			 */
-	}
+	    //Error handling for when the vehicle list is empty
+		if(vehicleList.isEmpty()) {
+			return null;
+		}
+		
+		//These two statements initalize the vehicle maximumCostVehicle to the first vehicle in the the vehicle list and
+		Vehicle maximumCostVehicle = vehicleList.get(0);
+		//double to the calculated maintenance cost of the current evaluated vehicle
+		double maximumMaintenanceCost = maximumCostVehicle.calculateMaintenaceCost(distance);
+		//Next we iterate through the for loop base on if i is less than vehicle size
+		for(int i = 1; i < vehicleList.size(); i++) {
+			//Set current evaluated vehicle to vehicle list at the ith location in index
+			Vehicle currentVehicle = vehicleList.get(i);
+			//calculate maintenance cost of the current vehicle and store it in maintenceCost double
+			double maintenanceCost = currentVehicle.calculateMaintenaceCost(distance);
+			//if the maintenanceCost is less than the maximum maintenance cost execute
+			if(maintenanceCost > maximumMaintenanceCost) {	
+				
+			maximumMaintenanceCost = maintenanceCost;
+			
+			maximumCostVehicle= currentVehicle;
+			}
+		}
+		//return vehicle maximum maintenance cost vehicle
+		return maximumCostVehicle;
+}
 		
 	public Vehicle getVehicleWithLowestMaintenanceCost(double distance) {
-		return null;
+		
 			/*
 			 * o Calculate the maintenance cost for each vehicle in the vehicle list and
 			 * return the vehicle with the lowest maintenance cost. o If multiple vehicles
 			 * have the same maintenance cost, randomly return one of the vehicles (Use the
 			 * Random class for random selection).
 			 */
+		
+		//Error handling for when the vehicle list is empty
+		if(vehicleList.isEmpty()) {
+			return null;
+		}
+		
+		//These two statements initalize the vehicle minimumCostVehicle to the first vehicle in the the vehicle list and 
+		Vehicle minimumCostVehicle = vehicleList.get(0);
+		//double to the calculated maintenance cost of the current evaluated vehicle
+		double minimumMaintenanceCost = minimumCostVehicle.calculateMaintenaceCost(distance);
+		//Next we iterate through the for loop base on if i is less than vehicle size
+		for(int i = 1; i < vehicleList.size(); i++) {
+			//Set current evaluated vehicle to vehicle list at the ith location in index
+			Vehicle currentVehicle = vehicleList.get(i);
+			//calculate maintenance cost of the current vehicle and store it in maintenceCost double
+			double maintenanceCost = currentVehicle.calculateMaintenaceCost(distance);
+			//if the maintenanceCost is less than the minimum maintenance cost execute
+			if(maintenanceCost < minimumMaintenanceCost)
+			{
+				//
+				minimumMaintenanceCost = maintenanceCost;
+				minimumCostVehicle = currentVehicle;	
+				
+			}
+		}
+		//return vehicle minimum maintenance cost vehicle
+		return minimumCostVehicle;
 	}
 
 	public ArrayList<Vehicle> getVehicleWithHighestFuelEfficiency(double distance, double fuelPrice) {
-		return vehicleList;
+		
 			/*
 			 * o Calculate the fuel efficiencies for each vehicle in the vehicle list and
 			 * return the vehicle with the highest fuel efficiency. o If multiple vehicles
 			 * have the same highest fuel efficiency, return vehicles with the same highest
 			 * fuel efficiency in an ArrayList.
 			 */
+		
+		
+		//Error handling for when the vehicleList is empty return new array list//
+		if(vehicleList.isEmpty()) {
+			return new ArrayList<>();
+		}
+		
+		//Create new array list for vehicle for highest fuel efficiency and initalize maxEfficeiency to double 0.0
+		ArrayList<Vehicle> highestFuel = new ArrayList<>();
+		double maxEfficiency = 0.0;
+		
+		//For vehicle in vehicleList execute
+		for(Vehicle vehicle : vehicleList) {
+			double fuelEfficency = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+			//first if the fuel efficiency of the vehicle is less than the current maxEfficiency than execute
+			if(fuelEfficency > maxEfficiency) {
+				
+				maxEfficiency = fuelEfficency;
+				//Clear highest fuel array list 
+				highestFuel.clear();
+				//Add the current highest efficiency vehicle to the list
+				highestFuel.add(vehicle);
+			//else if fuel efficiency and max efficiency are equal execute
+			} else if (fuelEfficency == maxEfficiency){
+				//add the current vehicle to array list
+				highestFuel.add(vehicle);
+			}
+		}
+		//Return the array list highest Fuel vehicle
+		return highestFuel;
 	}
+	
 		
 	public ArrayList<Vehicle> getVehicleWithLowestFuelEfficiency(double distance, double fuelPrice) {
-		return vehicleList;
+		
 			/*
 			 * Calculate the fuel efficiencies for each vehicle in the vehicle list and
 			 * return the vehicle with the lowest fuel efficiency. If multiple vehicles have
 			 * the same lowest fuel efficiency, return vehicles with the same lowest fuel
 			 * efficiency in an ArrayList.
 			 */
+		//Error handling for when the vehicleList is empty return new array list//
+		if(vehicleList.isEmpty()) {
+			return new ArrayList<>();
+		}
+		
+	    //Create new array list for vehicle for lowest fuel efficiency and initalize min Efficeiency to double 0.0
+		ArrayList<Vehicle> lowestFuel = new ArrayList<>();
+		double minEfficiency = 0.0;
+		
+		
+		for(Vehicle vehicle : vehicleList) {
+			double fuelEfficency = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+			//first if the fuel efficiency of the vehicle is greater than the current minEfficiency than execute
+			if(fuelEfficency > minEfficiency) {
+				minEfficiency = fuelEfficency;
+				lowestFuel.clear();
+				lowestFuel.add(vehicle);
+			//else if fuel efficiency and min efficiency are equal execute
+			} else if (fuelEfficency == minEfficiency){
+				//add the current vehicle to array list
+				lowestFuel.add(vehicle);
+			}
+		}
+		//Return the array list lowest Fuel vehicle
+		return lowestFuel;
+		
+		//make sure to switch to low instead of high
 	}
+	
 
 	public double getAverageFuelEfficiencyOfSUVs(double distance,double fuelPrice) {
-		return fuelPrice;
+		
 			/*
 			 * Calculate the average/mean of the fuel efficiency of SUVs in the vehicle
 			 * list. Use the isVehicleType(Vehicle v, Class clazz) method. If no SUVs exist
 			 * in the list return -1.0 as an error code that indicates there is no SUVs in
 			 * the list to calculate the average fuel efficiency
 			 */
+		
+		//setting our temporary number equal number of vehicle of type SUV
+		int suvTemp = getNumberOfVehiclesByType(SUV.class);
+		//if there are 0 suvs in the file error handle
+		if (suvTemp == 0) {
+		//Error handling for when no suvs in file//
+			return -1.0;
+		}
+		//setting our efficiency equal to 0
+		double totalEfficiency = 0;
+		//For every vehicle in the vehicle list execute
+		for(Vehicle vehicle : vehicleList) {
+			//if a vehicle is an SUV
+			//the efficiency of fuel = the fuel efficiency of the vehicle + the efficiency of the fuel
+			if(vehicle instanceof SUV){
+				totalEfficiency += vehicle.calculateFuelEfficiency(distance, fuelPrice);
+			}
+		}
+		//setting average equal to the total efficiency of all suvs in the file divided by the number of suv to find average
+		double average = totalEfficiency / suvTemp;
+		//Then we return double average;
+		return average;
 	}
 }
