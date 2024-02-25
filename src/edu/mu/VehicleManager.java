@@ -1,6 +1,16 @@
 package edu.mu;
 
 import java.util.*;
+import java.util.ArrayList;
+
+import edu.mu.vehicleEnums.FuelType;
+import edu.mu.vehicleEnums.StartMechanism;
+import edu.mu.vehicleEnums.VehicleColor;
+
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.*;
+
 
 public class VehicleManager {
 	private final static double distance = 300;
@@ -10,7 +20,7 @@ public class VehicleManager {
 	
 	//Todo: rb vvvvvvvvvvvvvv
 	public boolean initializeStock() {
-		return false;
+		
 		/*
 		 * o Reads the data from a CSV file located at vehicleFilePath. Initialize each
 		 * of the Vehicle objects (Hint: Consider using the split() method for
@@ -18,6 +28,63 @@ public class VehicleManager {
 		 * Store the objects into vehicleList). o Return true if the read file and
 		 * initialization are successful. o Return false if cannot read/find the file.
 		 */
+		try(BufferedReader br = new BufferedReader(new FileReader(vehicleListFile))){
+    		String line;
+    		while((line = br.readLine()) != null) { //iterate through all lines in the file 
+	          if(line.startsWith("Type")) { //skips headers
+	            continue;
+	          }
+	          
+	          //These initialize the vehicle based on csv location in file
+	          //set string called token to split line at ","
+	          String[] token = line.split(",");
+	          //Type is what we use for deciding case 
+	          String Type = token[0];
+	          //setting each variable to there respective spots in the token array
+	          String model = token[1];
+	          String make = token[2];
+	          long modelYear = Integer.parseInt(token[3]);
+	          double price = Integer.parseInt(token[4]);
+	          VehicleColor color = VehicleColor.valueOf(token[5]);
+	          FuelType fuelType = FuelType.valueOf(token[6]);
+	          double mileage = Integer.parseInt(token[7]);
+	          double mass = Double.parseDouble(token[8]);
+	          int cylinders = Integer.parseInt(token[9]);
+	          double gasTankCapacity = Integer.parseInt(token[10]);
+	          StartMechanism startType = StartMechanism.valueOf(token[11]);
+	          Vehicle vehicle = null;
+	          
+	          //Switch cases for Type of vehicle and passes initialized variables into constructor for each type
+	          switch(Type) {
+	          //Based on type case set vehicle to constructor type
+	            case "Car":
+	            	vehicle = new Car(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                    break;
+	                case "MotorBike":
+	                	 vehicle = new MotorBike(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                    break;
+	                case "SUV":
+	                	vehicle = new SUV(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                    break;
+	                case "Truck":
+	                	 vehicle = new Truck(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                	 break;
+	                default:
+	                	//if no case applies cont
+	                	continue;
+	          }
+	          //if vehicle is not initialized then add vehicle to vehicleList
+	          if(vehicle != null) {
+	        	  vehicleList.add(vehicle);
+	          }
+	       }
+    		//return statement
+    		return true;
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    	//return statement
+	        return false;
+		}
 	}
 	
 	//Todo: zj (all "display-Information" methods) vvvvvvvvvvvvvv
