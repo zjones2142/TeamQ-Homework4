@@ -1,7 +1,6 @@
 package edu.mu;
 
 import java.util.*;
-import java.util.ArrayList;
 
 import edu.mu.vehicleEnums.FuelType;
 import edu.mu.vehicleEnums.StartMechanism;
@@ -57,18 +56,18 @@ public class VehicleManager {
 	          //Switch cases for Type of vehicle and passes initialized variables into constructor for each type
 	          switch(Type) {
 	          //Based on type case set vehicle to constructor type
-	            case "Car":
-	            	vehicle = new Car(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	            	case "Car":
+	            		vehicle = new Car(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
 	                    break;
 	                case "MotorBike":
-	                	 vehicle = new MotorBike(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                	vehicle = new MotorBike(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
 	                    break;
 	                case "SUV":
 	                	vehicle = new SUV(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
 	                    break;
 	                case "Truck":
-	                	 vehicle = new Truck(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
-	                	 break;
+	                	vehicle = new Truck(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                	break;
 	                default:
 	                	//if no case applies cont
 	                	continue;
@@ -87,7 +86,7 @@ public class VehicleManager {
 		}
 	}
 	
-	//Todo: zj (all "display-Information" methods) vvvvvvvvvvvvvv
+	//Todo: zj (all "display-Information" methods) vvvvvvvvvvvvvv   //XXX: All display methods for different vehicle classes are built with the same logic so comments are only included for this method
 	public void displayAllCarInformation() {
 		/*
 		 * o This will display the information, including maintenance cost, fuel
@@ -95,10 +94,10 @@ public class VehicleManager {
 		 * vehicleList. o If the vehicle is not found, then print an appropriate error
 		 * message.
 		 */
-		int numNOTCar = 0;
+		int numNOTCar = 0; //number of vehicles that are not cars will be counted in the case that cars are not found
 		for(int i=0;i<vehicleList.size();i++) {
 			if(isVehicleType(vehicleList.get(i), Car.class)) {
-				System.out.println("Car "+i+":\n"+vehicleList.get(i).toString());
+				System.out.println("Car "+i+":\n"+vehicleList.get(i).toString()); //if vehicle is car, vehicle is printed using vehicle toString()
 			}
 			else {
 				numNOTCar++;
@@ -172,7 +171,7 @@ public class VehicleManager {
 		}
 	}
 	
-	public void displayVehicleInformation(Vehicle v) {
+	public void displayVehicleInformation(Vehicle v) { //uses vehicle class toString() to print info, calculated values are appended to the bottom
 		/*
 		 * o This will display the vehicle information, including maintenance cost, fuel
 		 * efficiency, and how the vehicle starts, of a Vehicle v which is present in
@@ -189,7 +188,7 @@ public class VehicleManager {
 		}
 	}
 	
-	public void displayAllVehicleInformation() {
+	public void displayAllVehicleInformation() { //prints "toString-ed" vehicles from list to console
 		for(int i=0;i<vehicleList.size();i++) {
 			System.out.println("Vehicle "+i+":\n"+vehicleList.get(i).toString());
 			System.out.println(" Maintenance Cost: $"+vehicleList.get(i).calculateMaintenaceCost(distance)+"\n"+
@@ -227,12 +226,12 @@ public class VehicleManager {
 		 * exist, or file empty).
 		 */
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(vehicleListFile))) {
-    		//string constructor
+    		//string constructing
 			String[] str = new String[vehicleList.size()];
 			
     		for(int i=0;i<vehicleList.size();i++) {
     			str[i] = vehicleList.get(i).getModel()+","
-    					+vehicleList.get(i).getMake()+","
+    					+vehicleList.get(i).getMake()+"," 							//builds comma list for each vehicle (does not include types)
     					+Long.toString(vehicleList.get(i).getModelYear())+","
     					+Double.toString(vehicleList.get(i).getPrice())+","
     					+VehicleColor.toString(vehicleList.get(i).getColor())+","
@@ -243,9 +242,9 @@ public class VehicleManager {
     					+Double.toString(vehicleList.get(i).getGasTankCapacity())+","
     					+StartMechanism.toString(vehicleList.get(i).getStartType())+",";
     		}
-    		//file writing
+    		//file writing                //adds header line:    
     		bw.write("Type,Model,Make,ModelYear,Price,Color,FuelType,Mileage,Mass,Cylinders,GasTankCapacity,StartType"+System.getProperty("line.separator"));
-    		for(int i=0;i<vehicleList.size();i++) {
+    		for(int i=0;i<vehicleList.size();i++) {   //following header, write vehicles line by line using previously constructed strings and adds appends type to beginning of line
     			if(vehicleList.get(i) instanceof Truck) {
     				bw.write("Truck,"+str[i]+System.getProperty("line.separator"));
     			}
