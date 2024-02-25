@@ -218,13 +218,46 @@ public class VehicleManager {
 	
 	//Todo: rb vvvvvvvvvvvvvv
 	public boolean saveVehicleList() {
-		return false;
-		/*
-		 * o Saves the updated vehicleList back to the CSV file located at
-		 * vehicleFilePath. o Overwrites the existing file with the updated data. o
-		 * Returns true if the saving is successful, false otherwise (file does not
-		 * exist, or file empty).
-		 */
+	    try (PrintWriter writer = new PrintWriter(new File(vehicleFilePath))) {
+	        for (Vehicle vehicle : vehicleList) {
+	            writer.println(vehicleToFileString(vehicle));
+	        }
+	        return true; // File successfully written
+	    } catch (FileNotFoundException e) {
+	        System.out.println("Error writing to the file: " + e.getMessage());
+	        return false; // Error writing to the file
+	    }
+	}
+	
+	private String vehicleToFileString(Vehicle vehicle) {
+	    // Determine the type of the vehicle based on its class
+	    String type;
+	    if (vehicle instanceof Car) {
+	        type = "Car";
+	    } else if (vehicle instanceof Truck) {
+	        type = "Truck";
+	    } else if (vehicle instanceof SUV) {
+	        type = "SUV";
+	    } else if (vehicle instanceof MotorBike) {
+	        type = "MotorBike";
+	    } else {
+	        type = "Unknown"; // Default case, should not happen in well-defined logic
+	    }
+
+	    // Concatenate attributes to form a CSV line
+	    return String.join(",",
+	            type,
+	            vehicle.getMake(),
+	            vehicle.getModel(),
+	            String.valueOf(vehicle.getModelYear()),
+	            String.valueOf(vehicle.getPrice()),
+	            vehicle.getColor().name(),
+	            vehicle.getFuelType().name(),
+	            String.valueOf(vehicle.getMileage()),
+	            String.valueOf(vehicle.getCylinders()),
+	            String.valueOf(vehicle.getGasTankCapacity()),
+	            vehicle.getStartType().name(),
+	            String.valueOf(vehicle.getMass()));
 	}
 	
 	//Todo: jm vvvvvvvvvvvvvv
