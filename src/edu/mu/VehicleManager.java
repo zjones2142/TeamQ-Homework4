@@ -220,13 +220,52 @@ public class VehicleManager {
 	
 	//Todo: rb vvvvvvvvvvvvvv
 	public boolean saveVehicleList() {
-		return false;
 		/*
 		 * o Saves the updated vehicleList back to the CSV file located at
 		 * vehicleFilePath. o Overwrites the existing file with the updated data. o
 		 * Returns true if the saving is successful, false otherwise (file does not
 		 * exist, or file empty).
 		 */
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(vehicleListFile))) {
+    		//string constructor
+			String[] str = new String[vehicleList.size()/2];
+			String[] str1 = new String[vehicleList.size()/2];
+			
+    		for(int i=0;i<vehicleList.size();i++) {
+    			str[i] = vehicleList.get(i).getModel()+","
+    					+vehicleList.get(i).getMake()+","
+    					+Long.toString(vehicleList.get(i).getModelYear())+","
+    					+Double.toString(vehicleList.get(i).getPrice())+","
+    					+VehicleColor.toString(vehicleList.get(i).getColor())+","
+    					+FuelType.toString(vehicleList.get(i).getFuelType())+","
+    					+Double.toString(vehicleList.get(i).getMileage())+","
+    					+Double.toString(vehicleList.get(i).getMass())+","
+    					+Integer.toString(vehicleList.get(i).getCylinders())+","
+    					+Double.toString(vehicleList.get(i).getGasTankCapacity())+","
+    					+StartMechanism.toString(vehicleList.get(i).getStartType())+",";
+    		}
+    		//file writing
+    		bw.write("Type,Model,Make,ModelYear,Price,Color,FuelType,Mileage,Mass,Cylinders,GasTankCapacity,StartType"+System.getProperty("line.separator"));
+    		for(int i=0;i<vehicleList.size();i++) {
+    			if(vehicleList.get(i) instanceof Truck) {
+    				bw.write("Truck,"+str[i]+System.getProperty("line.separator"));
+    			}
+    			else if (vehicleList.get(i) instanceof Car) {
+    				bw.write("Car,"+str[i]+System.getProperty("line.separator"));
+    			}
+    			else if (vehicleList.get(i) instanceof SUV) {
+    				bw.write("SUV,"+str[i]+System.getProperty("line.separator"));
+    			}
+    			else if (vehicleList.get(i) instanceof MotorBike) {
+    				bw.write("MotorBike,"+str[i]+System.getProperty("line.separator"));
+    			}
+    		}
+    		bw.close();
+    		return true;
+    	} catch(IOException e) {
+    		e.printStackTrace();
+    		return false;
+    	}
 	}
 	
 	//Todo: jm vvvvvvvvvvvvvv

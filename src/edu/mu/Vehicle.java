@@ -106,6 +106,7 @@ public abstract class Vehicle {
 				" Color: "+VehicleColor.toString(this.getColor())+"\n"+
 				" Fuel: "+FuelType.toString(this.getFuelType())+"\n"+
 				" Mileage: "+Double.toString(this.getMileage())+"\n"+
+				" Mass: "+Double.toString(this.getMass())+"\n"+
 				" Num Cylinders: "+Integer.toString(this.getCylinders())+"\n"+
 				" Gas Capacity: "+Double.toString(this.getGasTankCapacity())+" gal\n";
 	}
