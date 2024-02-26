@@ -1,15 +1,6 @@
 package edu.mu;
 
-//<<<<<<< HEAD
-import java.io.*;
-import java.util.ArrayList;
-
-import edu.mu.vehicleEnums.FuelType;
-import edu.mu.vehicleEnums.StartMechanism;
-import edu.mu.vehicleEnums.VehicleColor;
-//=======
 import java.util.*;
-import java.util.ArrayList;
 
 import edu.mu.vehicleEnums.FuelType;
 import edu.mu.vehicleEnums.StartMechanism;
@@ -18,26 +9,25 @@ import edu.mu.vehicleEnums.VehicleColor;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.*;
-//>>>>>>> branch 'main' of git@github.com:zjones2142/TeamQ-Homework4.git
 
 
 public class VehicleManager {
 	private final static double distance = 300;
 	private final static double fuelPrice = 3.25;
-	public final static String vehicleFilePath = "vehicleList.csv";
-	private ArrayList<Vehicle> vehicleList = new ArrayList<>();
+	public final static String vehicleListFile = "vehicleList.csv";
+	public ArrayList <Vehicle> vehicleList;
 	
 	//Todo: rb vvvvvvvvvvvvvv
 	public boolean initializeStock() {
-//<<<<<<< HEAD
-/*
+		
+		/*
 		 * o Reads the data from a CSV file located at vehicleFilePath. Initialize each
 		 * of the Vehicle objects (Hint: Consider using the split() method for
 		 * tokenization. Check the type of each object and instantiate the exact class.
 		 * Store the objects into vehicleList). o Return true if the read file and
 		 * initialization are successful. o Return false if cannot read/find the file.
 		 */
-		try(BufferedReader br = new BufferedReader(new FileReader(vehicleFilePath))){
+		try(BufferedReader br = new BufferedReader(new FileReader(vehicleListFile))){
     		String line;
     		while((line = br.readLine()) != null) { //iterate through all lines in the file 
 	          if(line.startsWith("Type")) { //skips headers
@@ -66,18 +56,18 @@ public class VehicleManager {
 	          //Switch cases for Type of vehicle and passes initialized variables into constructor for each type
 	          switch(Type) {
 	          //Based on type case set vehicle to constructor type
-	            case "Car":
-	            	vehicle = new Car(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	            	case "Car":
+	            		vehicle = new Car(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
 	                    break;
 	                case "MotorBike":
-	                	 vehicle = new MotorBike(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                	vehicle = new MotorBike(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
 	                    break;
 	                case "SUV":
 	                	vehicle = new SUV(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
 	                    break;
 	                case "Truck":
-	                	 vehicle = new Truck(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
-	                	 break;
+	                	vehicle = new Truck(model, make, modelYear, price, color, fuelType, mileage, cylinders, gasTankCapacity, startType, mass);
+	                	break;
 	                default:
 	                	//if no case applies cont
 	                	continue;
@@ -94,11 +84,9 @@ public class VehicleManager {
 	    	//return statement
 	        return false;
 		}
-//>>>>>>> branch 'main' of git@github.com:zjones2142/TeamQ-Homework4.git
 	}
-
-
-	//Todo: zj (all "display-Information" methods) vvvvvvvvvvvvvv
+	
+	//Todo: zj (all "display-Information" methods) vvvvvvvvvvvvvv   //XXX: All display methods for different vehicle classes are built with the same logic so comments are only included for this method
 	public void displayAllCarInformation() {
 		/*
 		 * o This will display the information, including maintenance cost, fuel
@@ -106,10 +94,10 @@ public class VehicleManager {
 		 * vehicleList. o If the vehicle is not found, then print an appropriate error
 		 * message.
 		 */
-		int numNOTCar = 0;
+		int numNOTCar = 0; //number of vehicles that are not cars will be counted in the case that cars are not found
 		for(int i=0;i<vehicleList.size();i++) {
 			if(isVehicleType(vehicleList.get(i), Car.class)) {
-				System.out.println("Car "+i+":\n"+vehicleList.get(i).toString());
+				System.out.println("Car "+i+":\n"+vehicleList.get(i).toString()); //if vehicle is car, vehicle is printed using vehicle toString()
 			}
 			else {
 				numNOTCar++;
@@ -183,7 +171,7 @@ public class VehicleManager {
 		}
 	}
 	
-	public void displayVehicleInformation(Vehicle v) {
+	public void displayVehicleInformation(Vehicle v) { //uses vehicle class toString() to print info, calculated values are appended to the bottom
 		/*
 		 * o This will display the vehicle information, including maintenance cost, fuel
 		 * efficiency, and how the vehicle starts, of a Vehicle v which is present in
@@ -200,7 +188,7 @@ public class VehicleManager {
 		}
 	}
 	
-	public void displayAllVehicleInformation() {
+	public void displayAllVehicleInformation() { //prints "toString-ed" vehicles from list to console
 		for(int i=0;i<vehicleList.size();i++) {
 			System.out.println("Vehicle "+i+":\n"+vehicleList.get(i).toString());
 			System.out.println(" Maintenance Cost: $"+vehicleList.get(i).calculateMaintenaceCost(distance)+"\n"+
@@ -231,61 +219,19 @@ public class VehicleManager {
 	
 	//Todo: rb vvvvvvvvvvvvvv
 	public boolean saveVehicleList() {
-//<<<<<< HEAD
-	    try (PrintWriter writer = new PrintWriter(new File(vehicleFilePath))) {
-	        for (Vehicle vehicle : vehicleList) {
-	            writer.println(vehicleToFileString(vehicle));
-	        }
-	        return true; // File successfully written
-	    } catch (FileNotFoundException e) {
-	        System.out.println("Error writing to the file: " + e.getMessage());
-	        return false; // Error writing to the file
-	    }
-	}
-	
-	private String vehicleToFileString(Vehicle vehicle) {
-	    // Determine the type of the vehicle based on its class
-	    String type;
-	    if (vehicle instanceof Car) {
-	        type = "Car";
-	    } else if (vehicle instanceof Truck) {
-	        type = "Truck";
-	    } else if (vehicle instanceof SUV) {
-	        type = "SUV";
-	    } else if (vehicle instanceof MotorBike) {
-	        type = "MotorBike";
-	    } else {
-	        type = "Unknown"; // Default case, should not happen in well-defined logic
-	    }
-
-	    // Concatenate attributes to form a CSV line
-	    return String.join(",",
-	            type,
-	            vehicle.getMake(),
-	            vehicle.getModel(),
-	            String.valueOf(vehicle.getModelYear()),
-	            String.valueOf(vehicle.getPrice()),
-	            vehicle.getColor().name(),
-	            vehicle.getFuelType().name(),
-	            String.valueOf(vehicle.getMileage()),
-	            String.valueOf(vehicle.getCylinders()),
-	            String.valueOf(vehicle.getGasTankCapacity()),
-	            vehicle.getStartType().name(),
-	            String.valueOf(vehicle.getMass()));
-//=======
 		/*
 		 * o Saves the updated vehicleList back to the CSV file located at
 		 * vehicleFilePath. o Overwrites the existing file with the updated data. o
 		 * Returns true if the saving is successful, false otherwise (file does not
 		 * exist, or file empty).
 		 */
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(vehicleFilePath))) {
-    		//string constructor
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(vehicleListFile))) {
+    		//string constructing
 			String[] str = new String[vehicleList.size()];
 			
     		for(int i=0;i<vehicleList.size();i++) {
     			str[i] = vehicleList.get(i).getModel()+","
-    					+vehicleList.get(i).getMake()+","
+    					+vehicleList.get(i).getMake()+"," 							//builds comma list for each vehicle (does not include types)
     					+Long.toString(vehicleList.get(i).getModelYear())+","
     					+Double.toString(vehicleList.get(i).getPrice())+","
     					+VehicleColor.toString(vehicleList.get(i).getColor())+","
@@ -296,9 +242,9 @@ public class VehicleManager {
     					+Double.toString(vehicleList.get(i).getGasTankCapacity())+","
     					+StartMechanism.toString(vehicleList.get(i).getStartType())+",";
     		}
-    		//file writing
+    		//file writing                //adds header line:    
     		bw.write("Type,Model,Make,ModelYear,Price,Color,FuelType,Mileage,Mass,Cylinders,GasTankCapacity,StartType"+System.getProperty("line.separator"));
-    		for(int i=0;i<vehicleList.size();i++) {
+    		for(int i=0;i<vehicleList.size();i++) {   //following header, write vehicles line by line using previously constructed strings and adds appends type to beginning of line
     			if(vehicleList.get(i) instanceof Truck) {
     				bw.write("Truck,"+str[i]+System.getProperty("line.separator"));
     			}
@@ -318,7 +264,6 @@ public class VehicleManager {
     		e.printStackTrace();
     		return false;
     	}
-//>>>>>>> branch 'main' of git@github.com:zjones2142/TeamQ-Homework4.git
 	}
 	
 	//Todo: jm vvvvvvvvvvvvvv
