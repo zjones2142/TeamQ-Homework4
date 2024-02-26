@@ -15,11 +15,10 @@ public class VehicleManager {
 	private final static double distance = 300;
 	private final static double fuelPrice = 3.25;
 	public final static String vehicleListFile = "vehicleList.csv";
-	public ArrayList <Vehicle> vehicleList;
+	public ArrayList <Vehicle> vehicleList = new ArrayList<Vehicle>();
 	
 	//Todo: rb vvvvvvvvvvvvvv
 	public boolean initializeStock() {
-		
 		/*
 		 * o Reads the data from a CSV file located at vehicleFilePath. Initialize each
 		 * of the Vehicle objects (Hint: Consider using the split() method for
@@ -43,15 +42,15 @@ public class VehicleManager {
 	          String model = token[1];
 	          String make = token[2];
 	          long modelYear = Integer.parseInt(token[3]);
-	          double price = Integer.parseInt(token[4]);
+	          double price = Double.parseDouble(token[4]);
 	          VehicleColor color = VehicleColor.valueOf(token[5]);
 	          FuelType fuelType = FuelType.valueOf(token[6]);
-	          double mileage = Integer.parseInt(token[7]);
+	          double mileage = Double.parseDouble(token[7]);
 	          double mass = Double.parseDouble(token[8]);
 	          int cylinders = Integer.parseInt(token[9]);
-	          double gasTankCapacity = Integer.parseInt(token[10]);
+	          double gasTankCapacity = Double.parseDouble(token[10]);
 	          StartMechanism startType = StartMechanism.valueOf(token[11]);
-	          Vehicle vehicle = null;
+	          Vehicle vehicle;
 	          
 	          //Switch cases for Type of vehicle and passes initialized variables into constructor for each type
 	          switch(Type) {
@@ -95,9 +94,11 @@ public class VehicleManager {
 		 * message.
 		 */
 		int numNOTCar = 0; //number of vehicles that are not cars will be counted in the case that cars are not found
+		int carCount = 1;
 		for(int i=0;i<vehicleList.size();i++) {
 			if(isVehicleType(vehicleList.get(i), Car.class)) {
-				System.out.println("Car "+i+":\n"+vehicleList.get(i).toString()); //if vehicle is car, vehicle is printed using vehicle toString()
+				System.out.println("Car "+carCount+":\n"+vehicleList.get(i).toString()); //if vehicle is car, vehicle is printed using vehicle toString()
+				carCount++;
 			}
 			else {
 				numNOTCar++;
@@ -116,9 +117,11 @@ public class VehicleManager {
 		 * message.
 		 */
 		int numNOTTruck = 0;
+		int truckCount = 1;
 		for(int i=0;i<vehicleList.size();i++) {
 			if(isVehicleType(vehicleList.get(i), Truck.class)) {
-				System.out.println("Truck "+i+":\n"+vehicleList.get(i).toString());
+				System.out.println("Truck "+truckCount+":\n"+vehicleList.get(i).toString());
+				truckCount++;
 			}
 			else {
 				numNOTTruck++;
@@ -137,9 +140,11 @@ public class VehicleManager {
 		 * message.
 		 */
 		int numNOTSUV = 0;
+		int SUVCount = 1;
 		for(int i=0;i<vehicleList.size();i++) {
 			if(isVehicleType(vehicleList.get(i), SUV.class)) {
-				System.out.println("SUV "+i+":\n"+vehicleList.get(i).toString());
+				System.out.println("SUV "+SUVCount+":\n"+vehicleList.get(i).toString());
+				SUVCount++;
 			}
 			else {
 				numNOTSUV++;
@@ -158,9 +163,11 @@ public class VehicleManager {
 		 * message.
 		 */
 		int numNOTBike = 0;
+		int bikeCount = 1;
 		for(int i=0;i<vehicleList.size();i++) {
 			if(isVehicleType(vehicleList.get(i), MotorBike.class)) {
-				System.out.println("MotorBike "+i+":\n"+vehicleList.get(i).toString());
+				System.out.println("MotorBike "+bikeCount+":\n"+vehicleList.get(i).toString());
+				bikeCount++;
 			}
 			else {
 				numNOTBike++;
@@ -190,12 +197,11 @@ public class VehicleManager {
 	
 	public void displayAllVehicleInformation() { //prints "toString-ed" vehicles from list to console
 		for(int i=0;i<vehicleList.size();i++) {
-			System.out.println("Vehicle "+i+":\n"+vehicleList.get(i).toString());
+			System.out.println("Vehicle "+(i+1)+":\n"+vehicleList.get(i).toString());
 			System.out.println(" Maintenance Cost: $"+vehicleList.get(i).calculateMaintenaceCost(distance)+"\n"+
 					" Fuel Efficiency: "+vehicleList.get(i).calculateFuelEfficiency(distance, fuelPrice)+"\n");
 		}
 	}
-	
 
 	public boolean removeVehicle(Vehicle vehicle) {
 		/*Removes the given vehicle from the vehicleList.
@@ -243,7 +249,7 @@ public class VehicleManager {
     					+StartMechanism.toString(vehicleList.get(i).getStartType())+",";
     		}
     		//file writing                //adds header line:    
-    		bw.write("Type,Model,Make,ModelYear,Price,Color,FuelType,Mileage,Mass,Cylinders,GasTankCapacity,StartType"+System.getProperty("line.separator"));
+    		bw.write("Type,Model,Make,ModelYear,Price,Color,FuelType,Mileage,Mass,Cylinders,GasTankCapacity,StartType,"+System.getProperty("line.separator"));
     		for(int i=0;i<vehicleList.size();i++) {   //following header, write vehicles line by line using previously constructed strings and adds appends type to beginning of line
     			if(vehicleList.get(i) instanceof Truck) {
     				bw.write("Truck,"+str[i]+System.getProperty("line.separator"));
